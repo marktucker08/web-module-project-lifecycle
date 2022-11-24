@@ -27,12 +27,14 @@ export default class App extends React.Component {
 
   addTodo = (e, item) => {
     e.preventDefault();
-    const newTodo = {
-      name: item,
-      id: Date.now(),
-      completed: false
-    }
-    this.setState({...this.state, todoData: [...this.state.todoData, newTodo]}); 
+    axios.post(URL,{ name: item })
+      .then((res) => {
+        console.log(res)
+        this.setState({...this.state, todoData: this.state.todoData.concat(res.data.data)}); 
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   postNewTodo = (item) => {
@@ -65,7 +67,7 @@ export default class App extends React.Component {
     return (
       <>
       <div>
-        <Form addTodo={this.addTodo} postNewTodo={this.postNewTodo}/>
+        <Form addTodo={this.addTodo} />
       </div>
       
       <div>

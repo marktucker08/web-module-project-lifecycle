@@ -15,7 +15,7 @@ export default class Form extends React.Component {
   submitForm = e => {
     e.preventDefault();
     this.props.addTodo(e, this.state.item);
-    this.props.postNewTodo(this.state.item);
+    // this.props.postNewTodo(this.state.item);
     this.setState({...this.state, item: ''});
   }
 
