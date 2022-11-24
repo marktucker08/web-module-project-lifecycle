@@ -19,7 +19,6 @@ export default class App extends React.Component {
       .catch((err) => console.log('nooooo'));
   }
   
-
   componentDidMount() {
     console.log("component did mount!")
       this.fetchTodos();
@@ -37,23 +36,20 @@ export default class App extends React.Component {
       })
   }
 
-  postNewTodo = (item) => {
-    axios.post(URL,{ name: item })
-      .then((res) => {
-        console.log(res)
+  toggleTodo = itemId => {
+    axios.patch(`${URL}/${itemId}`)
+      .then(res => {
+        this.setState({...this.state, todoData: this.state.todoData.map(item => {
+          if (item.id === itemId) {
+            return res.data.data
+          }
+          return item;
+          })
+        })
       })
       .catch(err => {
         console.log(err)
       })
-  }
-
-  toggleTodo = itemId => {
-    this.setState({...this.state, todoData: this.state.todoData.map(item => {
-      if (item.id === itemId) {
-        return {...item, completed: !item.completed}
-      }
-      return item;
-    })})
   }
 
   clearTodos = () => {
