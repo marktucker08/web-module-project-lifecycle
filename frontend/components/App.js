@@ -35,8 +35,14 @@ export default class App extends React.Component {
     this.setState({...this.state, todoData: [...this.state.todoData, newTodo]}); 
   }
 
-  postNewTodo = () => {
-    
+  postNewTodo = (item) => {
+    axios.post(URL,{ name: item })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   toggleTodo = itemId => {
@@ -59,7 +65,7 @@ export default class App extends React.Component {
     return (
       <>
       <div>
-        <Form addTodo={this.addTodo} />
+        <Form addTodo={this.addTodo} postNewTodo={this.postNewTodo}/>
       </div>
       
       <div>

@@ -9,13 +9,14 @@ export default class Form extends React.Component {
   }
   handleChange = e => {
     e.preventDefault();
-    this.setState({...this.state, item: e.target.value})
+    this.setState({...this.state, item: e.target.value});
   };
 
   submitForm = e => {
     e.preventDefault();
     this.props.addTodo(e, this.state.item);
-    this.setState({...this.state, item: ''})
+    this.props.postNewTodo(this.state.item);
+    this.setState({...this.state, item: ''});
   }
 
   render() {
