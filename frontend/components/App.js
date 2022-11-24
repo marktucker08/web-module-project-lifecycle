@@ -1,6 +1,7 @@
 import React from 'react'
 import Form from './Form';
 import TodoList from './TodoList';
+import axios from 'axios';
 
 const URL = 'http://localhost:9000/api/todos';
 
@@ -12,12 +13,16 @@ export default class App extends React.Component {
     }
   }
 
+  fetchTodos = () => {
+    axios.get(URL)
+      .then((res) => this.setState({todoData: res.data.data}) )
+      .catch((err) => console.log('nooooo'));
+  }
+  
+
   componentDidMount() {
     console.log("component did mount!")
-      fetch(URL)
-      .then((res) => res.json())
-      .then((todo) => this.setState({todoData: todo.data}) )
-      .catch((err) => console.log('nooooo'));
+      this.fetchTodos();
   }
 
   addTodo = (e, item) => {
@@ -28,6 +33,10 @@ export default class App extends React.Component {
       completed: false
     }
     this.setState({...this.state, todoData: [...this.state.todoData, newTodo]}); 
+  }
+
+  postNewTodo = () => {
+    
   }
 
   toggleTodo = itemId => {
